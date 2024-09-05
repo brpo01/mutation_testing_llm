@@ -2,6 +2,7 @@
   "name": "mutationtestingllm",
   "version": "1.0.0",
   "description": "An application for automated generation of test cases using GP4-LLM & Mutation Testing",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
