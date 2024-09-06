@@ -6,7 +6,7 @@ const ProgramSchema = new mongoose.Schema(
             type: String,
             required: [true, 'please provide a program under test'],
         },
-          testcase: {
+        testcase: {
             type: String,
             required: [true, 'please provide a corresponding test case'],
         },

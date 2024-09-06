@@ -14,11 +14,6 @@ const ProjectSchema = new mongoose.Schema({
         ref: 'User',
         required: [true, 'Please provide user'],
       },
-    researchAssistantId: {
-        type: String,
-        required: [true, 'please provide assistant ID']
-    },
-
     chatAssistantId: {
         type: String,
         required: [true, 'please provide assistant ID']

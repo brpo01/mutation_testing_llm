@@ -6,33 +6,35 @@ const openai = new OpenAI({
   apiKey: process.env.OPEN_API_SECRET_KEY,
 });
 
-const createResearchAssistant = async () => {
+const createProjectAssistant = async () => {
   const assistant = await openai.beta.assistants.create({
-    name: "Research Paper Filter",
-    description: "An assistant to filter research papers based on specific criteria such as inclusion and exclusion criteria.",
-    instructions: "You are an academic researcher You will be provided with a research paper, containing the fields: abstract, title, id, referenceCount, citationCount, year, openAccessPdf, and author. You will also be Given specific inclusion criteria, exclusion criteria, and a research question, identify and return Yes if the paper meets the inclusion criteria, exclusion criteria and research question and no if it does not meet the inclusion criteria, exclusion criteria and the research queustion",
+    name: "Project Comparison",
+    description: "An assistant to compare program & corresponding test case based on specific criteria such as program and testcase.",
+    instructions: "You are an AI mutation testing agent, you will be provided with a program under test and a corresponding test case containing the fields: program and testcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases.",
     model: "gpt-4-turbo",
     tools: [{ type: "code_interpreter" }],
   });
 return assistant.id
 }
+
 const createChatAssistant = async () => {
   const assistant = await openai.beta.assistants.create({
-    name: "research Chat assistant",
-    description: "An assistant that answers question based on an array of research papers",
-    instructions: "you are an academic researcher You will be provided with a JavaScript array of research papers, each represented as an object containing the fields: abstract, title, id, referenceCount, citationCount, year, openAccessPdf, and author. You will be required to answer questions based on the research papers. Strictly answer Question based on the research papers provided",
+    name: "program Chat assistant",
+    description: "An assistant that answers question based on a program under test and a corresponding test case",
+    instructions: " You are an AI mutation testing agent, you will be provided with a program under test and a corresponding test case containing the fields: program and testcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases. You will be required to answer questions based on the provided program under test and the corresponding test case. Strictly answer the question based on the parameters provided",
     model: "gpt-4-turbo",
   })
   return assistant.id
 }
-const processResearchPapers = async (assistantId, filteredPaper, inclusionCriteria, exclusionCriteria, researchQuestion) => {
+
+const processProgram = async (assistantId, program, testcase) => {
   const thread = await openai.beta.threads.create();
   try {
     const message = await openai.beta.threads.messages.create(
       thread.id,
         {
           role: "user",
-          content: `Evaluate this paper based on the following criteria: ${JSON.stringify(filteredPaper)}, Inclusion criteria: ${inclusionCriteria}, Exclusion criteria: ${exclusionCriteria}, Research question: ${researchQuestion}`
+          content: `Evaluate this program under test based on the following criteria: Program Under Test: ${program}, Test Case: ${testcase} `
         }
     );
 
@@ -40,7 +42,7 @@ const processResearchPapers = async (assistantId, filteredPaper, inclusionCriter
       thread.id,
       { 
         assistant_id: assistantId,
-        instructions: "Review the criteria and paper information provided and return 'Yes' if the paper meets all criteria and 'No' if it does not. Ensure no additional explanation is given"
+        instructions: "Review the program under test and the corresponding test case and return 'Yes' if the paper meets all criteria and 'No' if it does not. Ensure no additional explanation is given"
       }
     );
     if (run.status === 'completed') {
@@ -59,23 +61,24 @@ const processResearchPapers = async (assistantId, filteredPaper, inclusionCriter
       return run.status;
     }
   } catch (error) {
-    console.error("Failed to process research papers with assistant:", error.message);
+    console.error("Failed to process program and test case with assistant:", error.message);
     return null;
   }
 }
-const assistantChat = async (assistantId, researchPapers, userQuestion, threadId) => {
+const assistantChat = async (assistantId, program, testcase, mutationResult, threadId) => {
   try {
-    const formattedPapers = JSON.stringify({ researchPapers });
+    const Program = JSON.stringify({ program });
+    const testCase = JSON.stringify({ testcase });
     const userMessage = await openai.beta.threads.messages.create(threadId, {
       role: "user",
-      content: `Here are some research papers: ${formattedPapers}. Based on these papers, can you answer the question: ${userQuestion}?`,
+      content: `Here is a program under test: ${Program} and ${testCase}. Based on these, can you provide a mutation result: ${mutationResult}?`,
     });
 
     const questionTimestamp = new Date(userMessage.created_at);
 
     let run = await openai.beta.threads.runs.createAndPoll(threadId, {
       assistant_id: assistantId,
-      instructions: "Please answer the question strictly using the information from the research papers provided."
+      instructions: "Please answer the question strictly using the information from the program under test and test case provided."
     });
 
     if (run.status === 'completed') {
@@ -95,4 +98,4 @@ const assistantChat = async (assistantId, researchPapers, userQuestion, threadId
     return "An error occurred while processing your request.";
   }
 };
-export {processResearchPapers, createResearchAssistant, createChatAssistant, assistantChat}
+export {processProgram, createProjectAssistant, createChatAssistant, assistantChat}
