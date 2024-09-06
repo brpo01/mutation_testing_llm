@@ -14,7 +14,7 @@ import {
 import MutationResult from '../models/MutationResult.js';
 import Chat from '../models/Chat.js';
 
-const createResearch = async (req, res) => {
+const createProject = async (req, res) => {
   const { title, description } = req.body;
   const user = req.user.userId;
   if (!title || !description)

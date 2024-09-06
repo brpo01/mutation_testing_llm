@@ -13,7 +13,11 @@ const ProjectSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
         required: [true, 'Please provide user'],
-      },
+    },
+    projectAssistantId: {
+        type: String,
+        required: [true, 'please provide assistant ID']
+    },
     chatAssistantId: {
         type: String,
         required: [true, 'please provide assistant ID']
