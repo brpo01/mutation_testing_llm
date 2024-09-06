@@ -10,7 +10,7 @@ const ProgramSchema = new mongoose.Schema(
             type: String,
             required: [true, 'please provide a corresponding test case'],
         },
-        ProjectId: {
+        projectId: {
             type: mongoose.Types.ObjectId,
             ref: 'Project',
             required: [true, 'please provide the project ID']

@@ -15,7 +15,7 @@ const MutationResultSchema = new mongoose.Schema({
           ref: 'Program',
         },
     ],
-      ProjectId: {
+      projectId: {
         type: mongoose.Types.ObjectId,
         ref: 'Project',
         required: [true, 'please provide the project ID'],

@@ -20,7 +20,7 @@ const ChatSchema = new mongoose.Schema({
         ref: 'User',
         required: [true, 'Please provide user']
     },
-    ProjectId: {
+    projectId: {
         type: mongoose.Types.ObjectId,
         ref: 'Project',
         required: [true, 'please provide the project ID']

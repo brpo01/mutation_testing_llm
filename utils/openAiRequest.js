@@ -78,7 +78,7 @@ const assistantChat = async (assistantId, program, testcase, mutationResult, thr
 
     let run = await openai.beta.threads.runs.createAndPoll(threadId, {
       assistant_id: assistantId,
-      instructions: "Please answer the question strictly using the information from the program under test and test case provided."
+      instructions: "Please answer the question strictly using the information from the program under test and a corresponding test case provided."
     });
 
     if (run.status === 'completed') {
