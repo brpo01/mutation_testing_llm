@@ -1,5 +1,5 @@
 import Project from '../models/Project.js';
-import Program from '../models/Program.js';
+import MutationResult from '../models/MutationResult.js';
 import Chat from '../models/Chat.js';
 import { StatusCodes } from 'http-status-codes';
 import dotenv from 'dotenv';
@@ -14,18 +14,18 @@ const openai = new OpenAI({
 });
 
 const Startchat = async (req, res) => {
-    const { userQuestion } = req.body;
+    const { mutationResult } = req.body;
     const projectId = req.params.id;
 
     try {
-        const project = await Program.findOne({_id: projectId});
+        const project = await MutationResult.findOne({_id: projectId});
         if (!project) {
             throw new UnAuthenticatedError('Project not found');
         }
 
         const assistantId = Project.chatAssistantId;
-        const program = await Program.find({projectId: projectId});
-        const testcase = await Program.find({projectId: projectId});
+        const program = await MutationResult.find({projectId: projectId});
+        const testcase = await MutationResult.find({projectId: projectId});
         const existingChat = await Chat.findOne({projectId: projectId});
         let chat;
         if (existingChat) {
@@ -41,8 +41,8 @@ const Startchat = async (req, res) => {
         }
     const threadId = chat.threadId
      const chatResponse = await assistantChat(assistantId, program, testcase, mutationResult, threadId);
-        chat.messages.push({ role: 'user', message: userQuestion });
-        chat.messages.push({ role: 'assistant', message: mutationResult });
+        chat.messages.push({ role: 'user', message: mutationResult });
+        chat.messages.push({ role: 'assistant', message: chatResponse });
         await chat.save();
      res.status(StatusCodes.OK).json({'mutationResult' : mutationResult, 'assistant':chatResponse });
 

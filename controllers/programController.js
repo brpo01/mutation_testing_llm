@@ -1,18 +1,17 @@
-import PrimaryStudy from '../models/PrimaryStudies.js';
 import { StatusCodes } from 'http-status-codes';
 import dotenv from 'dotenv';
 dotenv.config();
 import axios from 'axios';
-import SystematicReview from '../models/SystematicReview.js';
-import FilterQuery from '../models/FilterQuery.js';
+import Project from '../models/Project.js';
+import Program from '../models/Program.js';
 import UnAuthenticatedError from '../errors/unauthenticated.js';
 import filterScholarresponse from '../utils/filterScholarResponse.js';
 import {
-  processResearchPapers,
-  createResearchAssistant,
+  processProgram,
+  createProjectAssistant,
   createChatAssistant,
 } from '../utils/openAiRequest.js';
-import ResearchPapers from '../models/ResearchPapers.js';
+import MutationResult from '../models/MutationResult.js';
 import Chat from '../models/Chat.js';
 
 const createResearch = async (req, res) => {
