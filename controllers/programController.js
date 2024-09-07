@@ -1,11 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import dotenv from 'dotenv';
 dotenv.config();
-import axios from 'axios';
 import Project from '../models/Project.js';
 import Program from '../models/Program.js';
 import UnAuthenticatedError from '../errors/unauthenticated.js';
-import filterScholarresponse from '../utils/filterScholarResponse.js';
 import {
   processProgram,
   createProjectAssistant,
