@@ -84,23 +84,6 @@ const updateProject = async (req, res) => {
   });
 };
 
-
-import { StatusCodes } from 'http-status-codes';
-import dotenv from 'dotenv';
-dotenv.config();
-import axios from 'axios';
-import Project from '../models/Project.js';
-import Program from '../models/Program.js';
-import UnAuthenticatedError from '../errors/unauthenticated.js';
-import filterScholarresponse from '../utils/filterScholarResponse.js';
-import {
-  processProgram,
-  createProjectAssistant,
-  createChatAssistant,
-} from '../utils/openAiRequest.js';
-import MutationResult from '../models/MutationResult.js';
-import Chat from '../models/Chat.js';
-
 const createProgram = async (req, res) => {
   const { program, testcase, projectId } = req.body;
 
@@ -163,6 +146,7 @@ const createProgram = async (req, res) => {
       .json({ message: 'Error: Something went wrong' });
   }
 };
+
 
 const allProgram = async (req, res) => {
   const program = await Program.find({

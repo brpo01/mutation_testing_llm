@@ -78,9 +78,9 @@ const assistantChat = async (assistantId, program, testcase, mutationResult, thr
 
     let run = await openai.beta.threads.runs.createAndPoll(threadId, {
       assistant_id: assistantId,
-      instructions: "Please answer the question strictly using the information from the program under test and a corresponding test case provided."
-    });
-
+      instructions: "You are an AI mutation testing agent, you will be provided with a program under test and a corresponding test case containing the fields: program and testcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases. You will be required compare the mutated program with the test case and specify which testcase was able to kill the mutants and which mutants survived. After that generate a new set effective test cases that will address all the issues noticed in the program. Strictly answer the question based on the parameters provided",
+    }
+  );
     if (run.status === 'completed') {
       const messages = await openai.beta.threads.messages.list(run.thread_id);
       const relevantMessages = messages.data.filter(m => 
