@@ -28,7 +28,7 @@ app.use(cookieParser());
 const port = process.env.PORT || 5100;
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/program', authMiddleware, programRouter);
+app.use('/api/v1/project', authMiddleware, programRouter);
 app.use('/api/v1/users', authMiddleware, userRouter);
 app.use('/api/v1/chat', authMiddleware, chatRouter);
 
