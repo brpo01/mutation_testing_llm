@@ -19,221 +19,175 @@ const createProject = async (req, res) => {
   const user = req.user.userId;
   if (!title || !description)
     throw new UnAuthenticatedError('please enter all field');
-  const researchAssistantId = await createResearchAssistant();
+  const projectAssistantId = await createProjectAssistant();
   const chatAssistantId = await createChatAssistant();
-  const systematicReview = await SystematicReview.create({
+  const project = await Project.create({
     title,
     description,
     user,
-    researchAssistantId,
+    projectAssistantId,
     chatAssistantId,
   });
   res.status(StatusCodes.CREATED).json({
-    message: 'Systematic Literature Review Created sucessfully',
-    id: systematicReview.id,
-    title: systematicReview.title,
-    description: systematicReview.description,
-    assistantId: systematicReview.assistantId,
+    message: 'Project Created sucessfully',
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    assistantId: project.assistantId,
   });
 };
 
-const allResearch = async (req, res) => {
-  const systematicReviews = await SystematicReview.find({
+const allProject = async (req, res) => {
+  const project = await Project.find({
     user: req.user.userId,
   });
   res
     .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: systematicReviews });
+    .json({ message: 'successfull', data: project });
 };
 
-const getResearch = async (req, res) => {
-  const systematicReview = await SystematicReview.findOne({
+const getProject = async (req, res) => {
+  const project = await Project.findOne({
     _id: req.params.id,
   });
   res.status(StatusCodes.OK).json({
-    title: systematicReview.title,
-    description: systematicReview.description,
-    assistantId: systematicReview.assistantId,
+    title: project.title,
+    description: project.description,
+    assistantId: project.assistantId,
   });
 };
 
-const deleteResearch = async (req, res) => {
-  const systematicReview = await SystematicReview.findOne({
+const deleteProject = async (req, res) => {
+  const project = await Project.findOne({
     _id: req.params.id,
   });
 
-  if (!systematicReview) {
-    throw new NotFoundError(`No systematic Review with id :${req.params.id}`);
+  if (!project) {
+    throw new NotFoundError(`No Project with id :${req.params.id}`);
   }
 
-  await systematicReview.deleteOne({ _id: req.params.id });
-  await FilterQuery.deleteOne({ systematicReviewId: req.params.id });
-  await PrimaryStudy.deleteMany({ systematicReviewId: req.params.id });
+  await Project.deleteOne({ _id: req.params.id });
+  await Program.deleteOne({ projectId: req.params.id });
+  await MutationResult.deleteMany({ projectId: req.params.id });
 
   res
     .status(StatusCodes.OK)
-    .json({ message: 'Success! systematic review removed' });
+    .json({ message: 'Success! Project removed' });
 };
 
-const updateResearch = async (req, res) => {
-  const updatedSystematicReview = await SystematicReview.findByIdAndUpdate(
+const updateProject = async (req, res) => {
+  const updatedProject = await Project.findByIdAndUpdate(
     req.params.id,
     req.body
   );
   res.status(StatusCodes.OK).json({
-    message: 'systematic review edited successfully',
-    id: updatedSystematicReview.id,
+    message: 'project edited successfully',
+    id: updatedProject.id,
   });
 };
 
-const createQuery = async (req, res) => {
-  const {
-    researchQuestion,
-    inclusionCriteria,
-    exclusionCriteria,
-    searchString,
-    systematicReviewId,
-    startYear,
-    endYear,
-    maxResearch,
-  } = req.body;
 
-  if (
-    !researchQuestion ||
-    !inclusionCriteria ||
-    !exclusionCriteria ||
-    !searchString ||
-    !systematicReviewId
-  ) {
-    throw new UnAuthenticatedError('please enter all fields');
+const createProgram = async (req, res) => {
+  const { program, testcase, projectId } = req.body;
+
+  // Check for required fields
+  if (!program || !testcase || !projectId) {
+    throw new UnAuthenticatedError('Please enter all fields');
   }
 
   try {
-    const systematicReview = await SystematicReview.findOne({
-      _id: systematicReviewId,
-    });
+    // Find the project by ID
+    const project = await Project.findOne({ _id: projectId });
 
-    if (!systematicReview) {
-      return res.status(StatusCodes.NOT_FOUND).json({ message: 'Systematic review not found' });
+    if (!project) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: 'Project not found' });
     }
 
-    const semanticResponse = await axios.get(
-      `https://api.semanticscholar.org/graph/v1/paper/search/?query=${searchString}&year=${startYear}-${endYear}&fields=title,url,abstract,authors,referenceCount,citationCount,year,openAccessPdf&limit=${maxResearch}`,
-      { headers: { 'x-api-key': process.env.SEMANTIC_SCHOLAR_API_KEY } }
+    // Create a new program document and save it
+    const newProgram = await Program.create({ program, testcase, projectId });
+
+    // Process the program with OpenAI
+    const openAiResponse = await processProgram(
+      project.projectAssistantId,
+      program,
+      testcase
     );
 
-    const semanticScholarData = semanticResponse.data;
-    const filteredPapers = filterScholarresponse(semanticScholarData);
-    let totalFound = 0;
+    // Check if OpenAI response is 'Yes'
+    if (openAiResponse === 'Yes') {
+      const mutationResult = await MutationResult.create({
+        result: openAiResponse,
+        newTestSuite: "New test cases to be added", // Assuming you will generate or specify this value
+        program: newProgram._id,
+        projectId: project._id,
+        user: req.user.userId,
+      });
 
-    const filterQuery = await FilterQuery.create({
-      researchQuestion,
-      inclusionCriteria,
-      exclusionCriteria,
-      searchString,
-      systematicReviewId,
-      totalFound,
-    });
-
-    for (const filteredPaper of filteredPapers) {
-      // Check and upsert research papers per systematic review
-      const upsertQuery = {
-        title: filteredPaper.title,
-        systematicReviewId: filterQuery.systematicReviewId
-      };
-
-      await ResearchPapers.updateOne(upsertQuery, {
-        $setOnInsert: {
-          ...filteredPaper,
-          filterQuery: filterQuery.id,
-          user: req.user.userId,
-        },
-      }, { upsert: true });
-
-      const openAiResponse = await processResearchPapers(
-        systematicReview.researchAssistantId,
-        filteredPaper,
-        inclusionCriteria,
-        exclusionCriteria,
-        researchQuestion
-      );
-
-      if (openAiResponse === 'Yes') {
-        totalFound++;
-        await PrimaryStudy.updateOne(upsertQuery, {
-          $setOnInsert: {
-            ...filteredPaper,
-            filterQuery: filterQuery.id,
-            user: req.user.userId,
-          },
-        }, { upsert: true });
-      }
+      return res.status(StatusCodes.OK).json({
+        message: 'Mutation result created successfully',
+        data: mutationResult,
+      });
+    } else {
+      return res.status(StatusCodes.OK).json({
+        message: 'Program did not meet the criteria for mutation result creation',
+      });
     }
-
-    await FilterQuery.updateOne(
-      { _id: filterQuery.id },
-      { $set: { totalFound } }
-    );
-
-    res.status(StatusCodes.OK).json({ message: 'Primary study selection successful' });
   } catch (error) {
-    res.status(StatusCodes.BAD_REQUEST).json({ message: 'Error something happened' });
     console.error(error);
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'Error: Something went wrong' });
   }
 };
 
 
-const allQuery = async (req, res) => {
-  const filterQueries = await FilterQuery.find({
-    systematicReviewId: req.params.id,
+
+const allProgram = async (req, res) => {
+  const program = await Program.find({
+    projectId: req.params.id,
   });
   res
     .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: filterQueries });
+    .json({ message: 'successfull', data: program });
 };
-const deleteQuery = async (req, res) => {
-  const query = await FilterQuery.findOne({
+
+const deleteProgram = async (req, res) => {
+  const program = await Program.findOne({
     _id: req.params.id,
   });
-  if (!query) {
-    throw new NotFoundError(`No query with id :${req.params.id}`);
+  if (!program) {
+    throw new NotFoundError(`No program under test with id :${req.params.id}`);
   }
 
-  await query.deleteOne({ _id: req.params.id });
-  await PrimaryStudy.deleteMany({ filterQuery: req.params.id });
-  await ResearchPapers.deleteMany({ filterQuery: req.params.id });
+  await program.deleteOne({ _id: req.params.id });
+  await MutationResult.deleteMany({ filterQuery: req.params.id });
   await Chat.deleteOne({ user: req.user.userId });
 
   res
     .status(StatusCodes.OK)
-    .json({ message: 'Success! Query Successfully removed' });
+    .json({ message: 'Success! Program under test successfully removed' });
 };
 
-const getAllPrimaryStudy = async (req, res) => {
-  const primaryStudies = await PrimaryStudy.find({
-    systematicReviewId: req.params.id,
+
+const getAllMutationResults = async (req, res) => {
+  const mutationResult = await MutationResult.find({
+    projectId: req.params.id,
   });
   res
     .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: primaryStudies });
+    .json({ message: 'successfull', data: mutationResult });
 };
-const getAllResearchPaper = async (req, res) => {
-  const researchPaper = await ResearchPapers.find({
-    systematicReviewId: req.params.id,
-  });
-  res
-    .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: researchPaper });
-};
+
 export {
-  createResearch,
-  allResearch,
-  getResearch,
-  createQuery,
-  deleteResearch,
-  updateResearch,
-  allQuery,
-  deleteQuery,
-  getAllPrimaryStudy,
-  getAllResearchPaper,
+  createProject,
+  allProject,
+  getProject,
+  createProgram,
+  deleteProgram,
+  updateProject,
+  allProgram,
+  deleteProject,
+  getAllMutationResults,
 };
