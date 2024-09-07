@@ -121,7 +121,7 @@ const createProgram = async (req, res) => {
     );
 
     // Check if OpenAI response is 'Yes'
-    if (openAiResponse === 'Yes') {
+   
       const mutationResult = await MutationResult.create({
         result: openAiResponse,
         newTestSuite: "New test cases to be added", // Assuming you will generate or specify this value
@@ -134,11 +134,7 @@ const createProgram = async (req, res) => {
         message: 'Mutation result created successfully',
         data: mutationResult,
       });
-    } else {
-      return res.status(StatusCodes.OK).json({
-        message: 'Program did not meet the criteria for mutation result creation',
-      });
-    }
+    
   } catch (error) {
     console.error(error);
     return res
