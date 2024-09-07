@@ -1,30 +1,28 @@
 import express from 'express';
 import {
-  createResearch,
-  allResearch,
-  getResearch,
-  createQuery,
-  deleteResearch,
-  updateResearch,
-  allQuery,
-  getAllPrimaryStudy,
-  deleteQuery,
-  getAllResearchPaper,
-} from '../controllers/researchController.js';
+  createProject,
+  allProject,
+  getProject,
+  createProgram,
+  deleteProgram,
+  updateProject,
+  allProgram,
+  deleteProject,
+  getAllMutationResults,
+} from '../controllers/programController.js';
 
 const router = express.Router();
 
-router.route('/create').post(createResearch);
-router.route('/all').get(allResearch);
+router.route('/create').post(createProject);
+router.route('/all').get(allProject);
 router
   .route('/:id')
-  .get(getResearch)
-  .delete(deleteResearch)
-  .patch(updateResearch);
-router.route('/query/create').post(createQuery);
-router.route('/query/:id').delete(deleteQuery);
-router.route('/query/all/:id').get(allQuery);
-router.route('/primarystudies/:id').get(getAllPrimaryStudy);
-router.route('/un/papers/:id').get(getAllResearchPaper);
+  .get(getProject)
+  .delete(deleteProject)
+  .patch(updateProject);
+router.route('/program/create').post(createProgram);
+router.route('/program/:id').delete(deleteProgram);
+router.route('/program/all/:id').get(allProgram);
+router.route('/mutation-results/:id').get(getAllMutationResults);
 
 export default router;
