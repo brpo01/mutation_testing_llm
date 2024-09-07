@@ -27,14 +27,14 @@ const createChatAssistant = async () => {
   return assistant.id
 }
 
-const processProgram = async (assistantId, program, testcase) => {
+const processProgram = async (assistantId, decodedProgram, decodedTestcase) => {
   const thread = await openai.beta.threads.create();
   try {
     const message = await openai.beta.threads.messages.create(
       thread.id,
         {
           role: "user",
-          content: `Evaluate this program under test based on the following criteria: Program Under Test: ${program}, Test Case: ${testcase} `
+          content: `Evaluate this program under test based on the following criteria: Program Under Test: ${decodedProgram}, Test Case: ${decodedTestcase} `
         }
     );
 
@@ -42,7 +42,7 @@ const processProgram = async (assistantId, program, testcase) => {
       thread.id,
       { 
         assistant_id: assistantId,
-        instructions: "Review the program under test and the corresponding test case and return 'Yes' if the paper meets all criteria and 'No' if it does not. Ensure no additional explanation is given"
+        instructions: "You are an AI mutation testing agent, you will be provided with a program under test and a corresponding test case containing the fields: decodedProgram and decodedTestcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases. You will be required compare the mutated program with the test case and specify which testcase was able to kill the mutants and which mutants survived. After that generate a new set effective test cases that will address all the issues noticed in the program. Strictly answer the question based on the parameters provided"
       }
     );
     if (run.status === 'completed') {
