@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program - MutaLLM</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-primary text-white text-center py-3">
+    <h1>MutaLLM</h1>
+  </header>
+
+  <!-- Program Input -->
+  <div class="container mt-5">
+    <h2 class="text-center">Add Program Code and Test Cases</h2>
+    <form id="programForm" class="mt-4">
+      <div class="mb-3">
+        <textarea id="programCode" class="form-control" placeholder="Enter Program Code"></textarea>
+      </div>
+      <div class="mb-3">
+        <input type="file" id="programFile" class="form-control" accept=".txt,.js,.java,.py">
+      </div>
+      <div class="mb-3">
+        <textarea id="testCase" class="form-control" placeholder="Enter Test Case"></textarea>
+      </div>
+      <div class="mb-3">
+        <input type="file" id="testCaseFile" class="form-control" accept=".txt,.json">
+      </div>
+      <div class="d-grid">
+        <button type="button" id="mutationButton" class="btn btn-primary">Perform Mutation Analysis</button>
+      </div>
+    </form>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

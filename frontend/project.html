@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - MutaLLM</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-primary text-white text-center py-3">
+    <h1>MutaLLM</h1>
+  </header>
+
+  <!-- Project Management -->
+  <div class="container mt-5">
+    <h2 class="text-center">Create a New Project</h2>
+    <form id="projectForm" class="mt-4">
+      <div class="mb-3">
+        <input type="text" id="projectTitle" class="form-control" placeholder="Project Title" required>
+      </div>
+      <div class="mb-3">
+        <textarea id="projectDescription" class="form-control" placeholder="Project Description" required></textarea>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Create Project</button>
+      </div>
+    </form>
+
+    <h3 class="mt-5">Your Projects</h3>
+    <ul id="projectList" class="list-group mt-3"></ul>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
