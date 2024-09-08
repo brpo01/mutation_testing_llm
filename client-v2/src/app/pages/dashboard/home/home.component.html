@@ -15,9 +15,9 @@
       <button
         class="btn btn-view"
         (click)="selectProject(project)"
-        [routerLink]="['/dashboard/project', project._id]"
+        [routerLink]="['/dashboard/research', project._id]"
       >
-        View Research
+        View Project
       </button>
       <button class="btn btn-danger" (click)="showDeleteConfirm(project._id)">
         <span nz-icon nzType="delete" nzTheme="fill"></span>
