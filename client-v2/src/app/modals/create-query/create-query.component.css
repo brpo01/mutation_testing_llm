@@ -1,8 +1,43 @@
 .form-input.large {
   min-height: 120px;
 }
+
 .form-input,
 .form-textarea,
 .form-select {
   background: transparent;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between input and button */
+}
+
+.upload-button {
+  display: none; /* Hide the default file input */
+}
+
+.upload-label {
+  background: var(--primary-500);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.upload-label:hover {
+  background: var(--primary-600);
+}
+
+.upload-label:active {
+  background: var(--primary-700);
+}
+
+.upload-label:before {
+  content: '📁'; /* File icon */
+  margin-right: 0.5rem;
 }

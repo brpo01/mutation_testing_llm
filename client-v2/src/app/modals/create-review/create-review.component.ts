@@ -62,7 +62,7 @@ export class CreateReviewComponent {
         );
         this.isVisible = false;
         this.projectService.setSelectedProject(res);
-        this.router.navigateByUrl(`dashboard/project/${res.id}`);
+        this.router.navigateByUrl(`dashboard/research/${res.id}`);
       },
       error: (error: any) => {
         this.notification.create('error', 'error', 'an error occured');

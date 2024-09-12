@@ -9,9 +9,9 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { program } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-create-query',
@@ -24,7 +24,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzSpinModule,
   ],
   templateUrl: './create-query.component.html',
-  styleUrl: './create-query.component.css',
+  styleUrls: ['./create-query.component.css'], // Fixed typo
 })
 export class CreateQueryComponent {
   processLoading: boolean = false;
@@ -42,10 +42,10 @@ export class CreateQueryComponent {
     this.form = fb.group({
       program: ['', Validators.required],
       testcase: ['', Validators.required]
-     
     });
     this.projectId = this.activeRoute.snapshot.params['id'];
   }
+
   showModal(): void {
     this.isVisible = true;
   }
@@ -57,7 +57,7 @@ export class CreateQueryComponent {
       this.notification.create(
         'error',
         'error',
-        'please check fields and try again'
+        'Please check fields and try again'
       );
       return;
     }
@@ -77,7 +77,7 @@ export class CreateQueryComponent {
       },
       error: (error: any) => {
         this.isSpinning = false;
-        this.notification.create('error', 'error', 'an error occured');
+        this.notification.create('error', 'error', 'An error occurred');
       },
     });
   }
@@ -93,5 +93,27 @@ export class CreateQueryComponent {
         console.log(this.program);
       },
     });
+  }
+
+  // Handle file changes
+  handleFileChange(event: Event, type: 'program' | 'testcase'): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const content = reader.result as string;
+        console.log(`${type} file content:`, content);
+
+        // For example, you can update the form control value with file content
+        if (type === 'program') {
+          this.form.patchValue({ program: content });
+        } else {
+          this.form.patchValue({ testcase: content });
+        }
+      };
+      reader.readAsText(file);
+    }
   }
 }

@@ -11,6 +11,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EmptyComponent } from '../../../../components/empty/empty.component';
 import { ChatboxComponent } from '../../../../components/chatbox/chatbox.component';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -24,8 +25,8 @@ import { FormsModule } from '@angular/forms';
     NzSwitchModule,
     FormsModule
   ],
-  templateUrl: './details.component.html',
-  styleUrl: './details.component.css',
+  templateUrl: './details.component.html', 
+  styleUrls: ['./details.component.css'],  // Corrected the typo here from styleUrl to styleUrls
 })
 export class DetailsComponent {
   @ViewChild(CreateQueryComponent, { static: false })
@@ -37,7 +38,8 @@ export class DetailsComponent {
   projectId: string = ' ';
   programs: Array<any> = [];
   mutationResults: Array<any> = [];
-  // showUnfilteredPapers = false;
+  showUnfilteredPapers = false;
+
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
@@ -46,36 +48,39 @@ export class DetailsComponent {
   ) {
     this.projectId = this.route.snapshot.params['id'];
     this.getProject();
-    this.getAllProgram();
+    this.getAllPrograms();
     this.getAllMutationResults();
   }
+
   getProject() {
     this.projectService.getProject(this.projectId).subscribe({
       next: (res: any) => {
         this.project = res;
         if(res.length == 0) {
           this.notification.create(
-            'Sorry',
-            'Sorry',
-            'there are no projects matching your criteria'
+            'error',
+            'No Projects Found',
+            'There are no projects matching your criteria'
           );
         }
       },
     });
   }
-  getAllProgram() {
+
+  getAllPrograms() {
     this.projectService.getAllProgram(this.projectId).subscribe({
       next: (res: any) => {
-        if(res.data)
-        this.programs = res.data;
+        if (res.data) {
+          this.programs = res.data;
+        }
       },
     });
   }
+
   deleteProgram(programID: any) {
     this.modal.confirm({
-      nzTitle: 'Are you sure you want to delete this Program ?',
-      nzContent:
-        'Deleting this program will also remove all associated results',
+      nzTitle: 'Are you sure you want to delete this Program?',
+      nzContent: 'Deleting this program will also remove all associated results.',
       nzOkText: 'Delete',
       nzOkDanger: true,
       nzOnOk: () => {
@@ -86,42 +91,37 @@ export class DetailsComponent {
               'Success',
               'Program was successfully deleted'
             );
-            this.getAllProgram();
-            this.getAllMutationResults();
+            this.getAllPrograms(); // Refresh programs
+            this.getAllMutationResults(); // Refresh mutation results
           },
         });
       },
     });
   }
+
   getAllMutationResults() {
     this.projectService.getAllMutationResult(this.projectId).subscribe({
       next: (res: any) => {
-        this.mutationResults = res.data;
+        if (res.data) {
+          this.mutationResults = res.data;
+        }
       },
     });
   }
 
-  // getUnfilteredPaper() {
-  //   this.researchService.getUnfilteredPapers(this.researchId).subscribe({
-  //     next: (res: any) => {
-  //       this.primaryStudies = res.data
-  //     }
-  //   })
-  // }
+  // Show modal to create a new query/program
   showCreateQueryModal() {
     this.createQueryModal.showModal();
   }
+
+  // Open the chatbox
   showChatBox() {
     this.openChatBox.open();
   }
 
   onSwitchChange(switchState: boolean): void {
     if (switchState) {
-      this.getAllMutationResults();
-    }
-    else {
-      this.getAllMutationResults();
+      this.getAllMutationResults(); // Show all mutation results
     }
   }
-
 }

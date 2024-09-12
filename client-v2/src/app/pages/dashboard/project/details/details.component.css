@@ -1,0 +1,121 @@
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+section {
+  box-sizing: border-box;
+}
+
+.review-dashboard {
+  display: grid;
+  gap: 2rem;
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+}
+
+.primary-studies {
+  margin-top: 0;
+  justify-content: flex-start;
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+}
+
+.documents-wrapper {
+  padding-right: 1.5rem;
+  height: calc(100vh - 2rem); /* Adjust height to ensure it fits within viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+.documents-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.documents-wrapper::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+
+.documents-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: var(--grey-200);
+}
+
+.card {
+  width: 100%; /* Ensure cards fit within their container */
+  box-sizing: border-box;
+  overflow-x: auto; /* Enable horizontal scrolling within the card */
+  white-space: nowrap; /* Prevent wrapping of content */
+}
+
+.card-content {
+  display: inline-block; /* Ensure content doesn't wrap */
+  min-width: 100%; /* Ensure content takes up at least full width */
+}
+
+.with-query .primary-studies {
+  padding-left: 2rem;
+  border-left: 1px solid var(--grey-200);
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+}
+
+.search-input {
+  border-radius: 1rem;
+  width: 100%; /* Ensure search input fits within its container */
+  background: transparent;
+  padding-inline: 1rem;
+}
+
+.chatbox-toggle {
+  position: sticky;
+  left: 0; /* Adjust positioning */
+  bottom: 5%;
+  display: flex;
+  justify-content: end;
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+}
+
+.btn-chat-toggle {
+  border-radius: 100%;
+  font-size: 2rem;
+  width: 80px;
+  height: 80px;
+}
+
+.flex {
+  display: flex;
+  overflow-x: hidden; /* Prevent horizontal scrolling on the entire page */
+}
+
+.queries-wrapper {
+  height: calc(100vh - 2rem); /* Adjust height to ensure it fits within viewport */
+  overflow-y: auto; /* Allow vertical scrolling */
+  padding: 10px;
+}
+
+.selected-filter {
+  width: 100%; /* Ensure filter container fits within its parent */
+}
+
+.add-new-query {
+  background: white;
+  color: black;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  border-radius: 0.5rem;
+}
+
+.add-new-query span {
+  color: var(--primary-500);
+}

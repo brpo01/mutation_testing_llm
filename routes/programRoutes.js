@@ -23,6 +23,6 @@ router
 router.route('/program/create').post(createProgram);
 router.route('/program/:id').delete(deleteProgram);
 router.route('/program/all/:id').get(allProgram);
-router.route('/mutation-results/:id').get(getAllMutationResults);
+router.route('/mutation-result/:id').get(getAllMutationResults);
 
 export default router;

@@ -11,32 +11,52 @@
         <label for="program" class="form-label">
           Program
         </label>
-        <textarea
-          type="text"
-          class="form-input large"
-          [class.input-error]="
-            form['controls']['program'].errors &&
-            form['controls']['program'].touched
-          "
-          placeholder="Enter the program code you want to test "
-          formControlName="program"
-        ></textarea>
+        <div class="input-container">
+          <textarea
+            type="text"
+            class="form-input large"
+            [class.input-error]="
+              form['controls']['program'].errors &&
+              form['controls']['program'].touched
+            "
+            placeholder="Enter the program code you want to test "
+            formControlName="program"
+          ></textarea>
+          <input
+            type="file"
+            id="program-upload"
+            class="upload-button"
+            (change)="handleFileChange($event, 'program')"
+          />
+          <label for="program-upload" class="upload-label">Upload</label>
+        </div>
       </div>
+      
       <div class="form-row">
         <label for="testcase" class="form-label">
           Test Case
         </label>
-        <textarea
-          type="text"
-          class="form-input large"
-          [class.input-error]="
-            form['controls']['testcase'].errors &&
-            form['controls']['testcase'].touched
-          "
-          placeholder="Provide a test case that corresponds to your program "
-          formControlName="testcase"
-        ></textarea>
+        <div class="input-container">
+          <textarea
+            type="text"
+            class="form-input large"
+            [class.input-error]="
+              form['controls']['testcase'].errors &&
+              form['controls']['testcase'].touched
+            "
+            placeholder="Provide a test case that corresponds to your program "
+            formControlName="testcase"
+          ></textarea>
+          <input
+            type="file"
+            id="testcase-upload"
+            class="upload-button"
+            (change)="handleFileChange($event, 'testcase')"
+          />
+          <label for="testcase-upload" class="upload-label">Upload</label>
+        </div>
       </div>
+      
     </form>
     <nz-spin [nzSize]="'large'" [nzSpinning]="isSpinning"></nz-spin>
   </ng-container>

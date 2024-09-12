@@ -1,16 +1,16 @@
-<nz-drawer [nzClosable]="false" [nzWidth]="720" [nzVisible]="visible" nzPlacement="right" nzTitle="{{ projectTitle }} project assistant" (nzOnClose)="close()">
+<!-- <nz-drawer [nzClosable]="false" [nzWidth]="720" [nzVisible]="visible" nzPlacement="right" nzTitle="{{ projectTitle }} project assistant" (nzOnClose)="close()">
   <ng-container *nzDrawerContent>
     <div class="initial-chat-component" *ngIf="chatHistory.length === 0">
       <span nz-icon nzType="smile" nzTheme="twotone" class="initial-icon"></span>
       <span>How can I help you with your Program Snippet:</span>
       <strong>{{ projectTitle }}</strong>
     </div>
-    <!-- Chats container -->
+   
     <div class="chat-container flex">
       <div *ngFor="let chat of chatHistory">
         <p><strong>{{ chat.role }}:</strong> {{ chat.message }}</p>
       </div>
-      <!-- Show spinner when waiting for assistant's response -->
+    
       <div class="spinner">
         <nz-spin *ngIf="processLoading" [nzSize]="'small'" [nzSpinning]="true">
           <span><strong>Research Assistant:</strong> Processing...</span>
@@ -18,7 +18,7 @@
       </div>
     </div>
     
-    <!-- Typing container -->
+   
     <form [formGroup]="form" (submit)="startChat()">
       <div class="typing-container">
         <div class="typing-content">
@@ -30,4 +30,4 @@
       </div>
     </form>
   </ng-container>
-</nz-drawer>
+</nz-drawer> -->

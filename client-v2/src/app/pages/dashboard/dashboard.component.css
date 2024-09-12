@@ -1,36 +1,54 @@
+/* Allow the main dashboard to scroll if its content overflows */
+html, body {
+  height: 100%; /* Ensure the html and body take up full height */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  overflow-y: auto; /* Allow vertical scrolling on the body */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
 .dashboard {
   display: grid;
   grid-template-columns: 1fr;
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100vh; /* Take the full height of the viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
 aside {
   display: none;
 }
+
 .dashboard-page {
   width: 90vw;
   margin: 0 auto;
   padding: 2rem 0;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
+
 nav {
   height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
 .logo {
   display: flex;
   align-items: center;
   width: 100px;
 }
+
 .nav-center {
   display: flex;
   width: 90vw;
   align-items: center;
   justify-content: space-between;
-  .btn.btn-add-new {
-    padding: 1rem;
-  }
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
 .toggle-btn {
   background: transparent;
   border-color: transparent;
@@ -39,15 +57,19 @@ nav {
   cursor: pointer;
   display: flex;
   align-items: center;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
 .left-hand.flex {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
+
 .btn-container {
   position: relative;
 }
+
 .btn {
   display: flex;
   align-items: center;
@@ -57,12 +79,14 @@ nav {
   box-shadow: var(--shadow-2);
   max-width: fit-content;
 }
+
 .btn-signout {
   background-color: transparent;
   border: none;
   cursor: pointer;
   font-size: 1rem;
 }
+
 .dropdown {
   position: absolute;
   top: 40px;
@@ -75,9 +99,11 @@ nav {
   visibility: hidden;
   border-radius: var(--borderRadius);
 }
+
 .show-dropdown {
   visibility: visible;
 }
+
 .dropdown-btn {
   background: transparent;
   border-color: transparent;
@@ -86,6 +112,7 @@ nav {
   text-transform: capitalize;
   cursor: pointer;
 }
+
 .logo-text {
   display: none;
   margin: 0;
@@ -121,6 +148,7 @@ nav {
   .content {
     position: sticky;
     top: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   .show-sidebar {
     margin-left: 0;
@@ -137,6 +165,7 @@ nav {
     flex-direction: column;
     gap: 1.5rem;
     padding-inline: 1.5rem;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   .nav-link {
     display: flex;

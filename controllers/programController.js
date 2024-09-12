@@ -93,9 +93,9 @@ const createProgram = async (req, res) => {
   }
 
   try {
-    // Decode Base64 encoded program and testcase
-    const decodedProgram = Buffer.from(program, 'base64').toString('utf-8');
-    const decodedTestcase = Buffer.from(testcase, 'base64').toString('utf-8');
+    // Directly use the program and testcase from the request
+    const plainProgram = program;
+    const plainTestcase = testcase;
 
     // Find the project by ID
     const project = await Project.findOne({ _id: projectId });
@@ -108,33 +108,33 @@ const createProgram = async (req, res) => {
 
     // Create a new program document and save it
     const newProgram = await Program.create({
-      program: decodedProgram,
-      testcase: decodedTestcase,
+      program: plainProgram,
+      testcase: plainTestcase,
       projectId
     });
 
     // Process the program with OpenAI
     const openAiResponse = await processProgram(
       project.projectAssistantId,
-      decodedProgram,
-      decodedTestcase
+      plainProgram,
+      plainTestcase
     );
 
-    // Check if OpenAI response is 'Yes'
-   
-      const mutationResult = await MutationResult.create({
-        result: openAiResponse,
-        newTestSuite: "New test cases to be added", // Assuming you will generate or specify this value
-        program: newProgram._id,
-        projectId: project._id,
-        user: req.user.userId,
-      });
+    // Create a mutation result document with OpenAI's response
+    const mutationResult = await MutationResult.create({
+      result: openAiResponse,
+      newTestSuite: "New test cases to be added", // Assuming you will generate or specify this value
+      program: newProgram._id,
+      projectId: project._id,
+      user: req.user.userId,
+    });
 
-      return res.status(StatusCodes.OK).json({
-        message: 'Mutation result created successfully',
-        data: mutationResult,
-      });
-    
+    return res.status(StatusCodes.OK).json({
+      message: 'Mutation result created successfully',
+      result: mutationResult.result,
+      newTestSuite: mutationResult.newTestSuite
+    });
+
   } catch (error) {
     console.error(error);
     return res
@@ -150,7 +150,7 @@ const allProgram = async (req, res) => {
   });
   res
     .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: program });
+    .json({ message: 'successful', data: program });
 };
 
 const deleteProgram = async (req, res) => {
@@ -177,7 +177,7 @@ const getAllMutationResults = async (req, res) => {
   });
   res
     .status(StatusCodes.OK)
-    .json({ message: 'successfull', data: mutationResult });
+    .json({ message: 'successful', data: mutationResult });
 };
 
 export {

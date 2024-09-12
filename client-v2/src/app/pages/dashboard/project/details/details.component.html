@@ -1,0 +1,53 @@
+<section
+  class="main review-dashboard"
+    
+>
+
+  <section class="primary-studies">
+    <div class="top-row">
+      <h3>Mutation Testing Results</h3>
+      <div class="selected-filter">
+        <!-- <div class="search">
+          <input type="text" class="search-input" /><span
+            nz-icon
+            nzType="search"
+            nzTheme="outline"
+          ></span>
+        </div> -->
+      </div>
+      <!-- <div class="unfiltered-result-toggle">
+        <nz-switch
+          [(ngModel)]="showUnfilteredPapers"
+          (ngModelChange)="onSwitchChange($event)"
+        ></nz-switch
+        ><span>Show all results</span>
+      </div> -->
+    </div>
+    <div class="documents-wrapper">
+      <div class="empty-container" *ngIf="mutationResults.length === 0">
+        <app-empty [createQuery]="showCreateQueryModal.bind(this)"></app-empty>
+      </div>
+      <div class="document card" *ngFor="let mutationresult of mutationResults">
+        <div class="card-content">
+          <!-- <strong>Mutation Results</strong> -->
+          <pre>{{ mutationresult.result }}</pre>
+          <!-- <strong>New Test Suite</strong>
+          <p>{{ mutationresult.newTestSuite }}</p> -->
+      </div>
+      </div>
+    </div>
+
+  </section>
+
+  <button class="btn add-new-query" (click)="showCreateQueryModal()">
+    <span nz-icon nzType="plus" nzTheme="outline"></span> New Query
+  </button>
+  <section class="chatbox-toggle">
+    <!-- <button class="btn btn-chat-toggle" (click)="showChatBox()">
+      <i nz-icon nzType="wechat" nzTheme="outline"></i>
+    </button> -->
+    
+  </section>
+</section>
+<app-create-query></app-create-query>
+<app-chatbox [project]="project"></app-chatbox>

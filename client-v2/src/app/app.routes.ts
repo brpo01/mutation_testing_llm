@@ -36,14 +36,14 @@ export const routes: Routes = [
           title: 'Projects',
         },
         loadComponent: () =>
-          import('./pages/dashboard/research/research.component').then(
+          import('./pages/dashboard/project/research.component').then(
             (c) => c.ResearchComponent
           ),
         children: [
           {
             path: '',
             loadComponent: () =>
-              import('./pages/dashboard/research/home/home.component').then(
+              import('./pages/dashboard/project/home/home.component').then(
                 (c) => c.HomeComponent
               ),
           },
@@ -51,7 +51,7 @@ export const routes: Routes = [
             path: ':id',
             loadComponent: () =>
               import(
-                './pages/dashboard/research/details/details.component'
+                './pages/dashboard/project/details/details.component'
               ).then((c) => c.DetailsComponent),
           },
         ],
