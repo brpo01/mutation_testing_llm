@@ -1,16 +1,37 @@
+<header class="navbar navbar-expand-lg custom-navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            MutLLM
+        </a>
+    </div>
+</header>
+
 <main class="full-page">
     <form class="form" [formGroup]="form" (submit)="signin()">
         <h4>Login</h4>
         <div class="form-row">
             <label for="email" class="form-label">Email Address</label>
-            <input id="email" type="email" [class.input-error]="form['controls']['email'].errors && form['controls']['email'].touched" class="form-input" formControlName="email" placeholder="johnwick@example.com" />
+            <input
+                id="email"
+                type="email"
+                [class.input-error]="form['controls']['email'].errors && form['controls']['email'].touched"
+                class="form-input"
+                formControlName="email"
+                placeholder="satoshi@google.com"
+            />
         </div>
         <div class="form-row">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-input" [class.input-error]="form['controls']['password'].errors && form['controls']['password'].touched" placeholder="********" formControlName="password"/>
+            <input
+                type="password"
+                class="form-input"
+                [class.input-error]="form['controls']['password'].errors && form['controls']['password'].touched"
+                placeholder="********"
+                formControlName="password"
+            />
         </div>
         <div class="flex"></div>
-        <button type="submit" class="btn btn-block">
+        <button type="submit" class="btn btn-primary btn-block">
             <span *ngIf="!processLoading">Sign In</span>
             <nz-spin [nzSpinning]="processLoading"></nz-spin>
         </button>

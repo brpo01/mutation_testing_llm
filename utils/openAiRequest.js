@@ -10,7 +10,7 @@ const createProjectAssistant = async () => {
   const assistant = await openai.beta.assistants.create({
     name: "Project Comparison",
     description: "An assistant to compare program & corresponding test case based on specific criteria such as program and testcase.",
-    instructions: "You are an AI mutation testing agent, you will be provided with a program under test and a corresponding test case containing the fields: program and testcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases.",
+    instructions: "You are a Senior Software Engineer, you will be provided with a program under test and a corresponding test case containing the fields: program and testcase. Your task: mutate the program under test to test for effectiveness and robustness based on the language. Apply mutations strategically. Focus on subtle changes that test code resilience without breaking core functionality. Aim for realistic scenarios that could occur due to programming errors or edge cases.",
     model: "gpt-4-turbo",
     tools: [{ type: "code_interpreter" }],
   });

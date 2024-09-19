@@ -1,32 +1,113 @@
+/* Import Work Sans Font */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap');
+
+/* Navbar styles with custom padding, margin, and spacing */
+.custom-navbar {
+    background-color: #1a1a2e;
+    padding: 15px 30px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #ffffff;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.custom-navbar .navbar-brand:hover {
+    color: #ff5722;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: center;
+}
+
+/* Full-page styles */
 .full-page {
     display: grid;
     align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7fa;
+    font-family: 'Work Sans', sans-serif;
 }
 
+/* Form styles */
 .form {
     max-width: 400px;
-    border-top: 5px solid var(--primary-500);
-  }
+    border-top: 5px solid #ff5722;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-  h3 {
+.form-label {
+    color: #333;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.input-error {
+    border-color: #e74c3c;
+}
+
+.btn {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.btn:hover {
+    background-color: #e64a19;
+}
+
+.member-btn {
+    background: transparent;
+    border: transparent;
+    color: #2a2a72;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    letter-spacing: var(--letterSpacing);
+}
+
+/* Typography */
+h4 {
     text-align: center;
-  }
-  p {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    color: #2a2a72;
+}
+
+p {
     margin: 0;
     margin-top: 1rem;
     text-align: center;
-  }
-  .btn {
-    margin-top: 1rem;
-  }
-  .member-btn {
-    background: transparent;
-    border: transparent;
-    color: var(--primary-500);
-    cursor: pointer;
-    letter-spacing: var(--letterSpacing);
-  }
+    font-family: 'Work Sans', sans-serif;
+}
 
-  input.input-error {
-    border: 1px solid var(--red-dark)
-  }
+/* Responsive */
+@media (max-width: 600px) {
+    .form {
+        padding: 15px;
+    }
+}
