@@ -91,6 +91,8 @@ h2 {
   font-family: 'Work Sans', sans-serif;
   font-weight: 700;
   color: #2a2a72;
+  text-align: center; /* Center the title */
+  padding: 20px 0; /* Add vertical padding */
 }
 
 .user-details {
@@ -116,7 +118,6 @@ h2 {
 .nav-link.my-projects:hover {
   background-color: #e64a19; /* Darker shade on hover */
 }
-
 
 /* Responsive adjustments */
 @media (min-width: 992px) {
