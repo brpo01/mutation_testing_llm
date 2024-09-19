@@ -1,6 +1,7 @@
 <div class="empty-container" *ngIf="projects.length === 0">
   <app-empty [createReview]="showCreateReviewModal.bind(this)"></app-empty>
 </div>
+
 <section class="card-wrapper">
   <article class="card vertical" *ngFor="let project of projects">
     <div class="details-wrapper">
@@ -12,11 +13,7 @@
       <p>{{ project.description }}</p>
     </div>
     <div class="button-group">
-      <button
-        class="btn btn-view"
-        (click)="selectProject(project)"
-        [routerLink]="['/dashboard/research', project._id]"
-      >
+      <button class="btn btn-view" (click)="selectProject(project)" [routerLink]="['/dashboard/research', project._id]">
         View Project
       </button>
       <button class="btn btn-danger" (click)="showDeleteConfirm(project._id)">
@@ -28,5 +25,6 @@
     </div>
   </article>
 </section>
+
 <app-edit></app-edit>
 <app-create-review></app-create-review>

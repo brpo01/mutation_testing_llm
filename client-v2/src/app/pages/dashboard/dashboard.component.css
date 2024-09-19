@@ -1,63 +1,31 @@
-/* Allow the main dashboard to scroll if its content overflows */
-html, body {
-  height: 100%; /* Ensure the html and body take up full height */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  overflow-y: auto; /* Allow vertical scrolling on the body */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+/* Import Work Sans Font */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap');
+
+/* Navbar styles */
+.custom-navbar {
+  background-color: #1a1a2e;
+  padding: 15px 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr;
-  overflow-y: auto; /* Enable vertical scrolling */
-  height: 100vh; /* Take the full height of the viewport */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+.navbar-brand {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: #ffffff;
+  padding: 5px 0;
+  margin: 0;
 }
 
-aside {
-  display: none;
-}
-
-.dashboard-page {
-  width: 90vw;
-  margin: 0 auto;
-  padding: 2rem 0;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-nav {
-  height: var(--nav-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  width: 100px;
+.custom-navbar .navbar-brand:hover {
+  color: #ff5722;
 }
 
 .nav-center {
   display: flex;
-  width: 90vw;
-  align-items: center;
   justify-content: space-between;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-.toggle-btn {
-  background: transparent;
-  border-color: transparent;
-  font-size: 1.75rem;
-  color: var(--primary-500);
-  cursor: pointer;
-  display: flex;
   align-items: center;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%;
 }
 
 .left-hand.flex {
@@ -66,18 +34,11 @@ nav {
   align-items: center;
 }
 
-.btn-container {
-  position: relative;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0 0.5rem;
-  position: relative;
-  box-shadow: var(--shadow-2);
-  max-width: fit-content;
+.btn-link {
+  color: #ffffff; /* Update My Projects color to white */
+  font-family: 'Work Sans', sans-serif;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .btn-signout {
@@ -85,115 +46,85 @@ nav {
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  color: white;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.dropdown {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  width: 100%;
-  background: var(--primary-100);
-  box-shadow: var(--shadow-2);
-  padding: 0.5rem;
-  text-align: center;
-  visibility: hidden;
-  border-radius: var(--borderRadius);
+.btn-signout:hover {
+  color: #ff5722;
 }
 
-.show-dropdown {
-  visibility: visible;
-}
-
-.dropdown-btn {
-  background: transparent;
-  border-color: transparent;
-  color: var(--primary-500);
-  letter-spacing: var(--letterSpacing);
-  text-transform: capitalize;
+/* Button for creating new projects */
+.btn-add-new {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 12px;
   cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.logo-text {
-  display: none;
-  margin: 0;
+.btn-add-new:hover {
+  background-color: #e64a19;
 }
 
+/* Full-page styles */
+.dashboard {
+  display: grid;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: #f4f7fa;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.dashboard-page {
+  width: 90vw;
+  margin: 0 auto;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  color: #2a2a72;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+}
+
+.user-details nz-avatar {
+  background-color: #ff5722; /* Update user avatar color to match the theme */
+}
+
+/* Ensure that the "My Projects" button matches the theme color */
+.nav-link.my-projects {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Work Sans', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link.my-projects:hover {
+  background-color: #e64a19; /* Darker shade on hover */
+}
+
+
+/* Responsive adjustments */
 @media (min-width: 992px) {
-  .dashboard {
-    grid-template-columns: auto 1fr;
-  }
   .dashboard-page {
     width: 90%;
   }
+
   .nav-center {
     width: 90%;
-  }
-  .logo {
-    display: none;
-  }
-  .logo-text {
-    display: block;
-  }
-  aside {
-    display: block;
-    background-color: var(--white);
-  }
-  .sidebar-container {
-    background: var(--white);
-    min-height: 100vh;
-    height: 100%;
-    width: 350px;
-    transition: margin-left 0.3s ease-in-out;
-  }
-  .content {
-    position: sticky;
-    top: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  }
-  .show-sidebar {
-    margin-left: 0;
-  }
-  header {
-    height: 6rem;
-    display: flex;
-    align-items: center;
-    padding-left: 2.5rem;
-  }
-  .nav-links {
-    padding-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-inline: 1.5rem;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  }
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    color: var(--text-secondary-color);
-    padding: 1rem 0;
-    padding-left: 2.5rem;
-    text-transform: capitalize;
-    transition: padding-left 0.3s ease-in-out;
-  }
-  .nav-link:hover {
-    padding-left: 3rem;
-    color: var(--primary-500);
-    transition: var(--transition);
-  }
-  .icon {
-    font-size: 1.5rem;
-    display: grid;
-    place-items: center;
-  }
-  .active {
-    color: var(--primary-600);
-    background-color: var(--backgroundColor);
-    border-radius: var(--borderRadius);
-    border-left: 3px solid var(--primary-600);
-  }
-  .pending {
-    background: var(--background-color);
   }
 }

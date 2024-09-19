@@ -1,0 +1,99 @@
+/* Import Work Sans Font */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap');
+
+/* General styles */
+body {
+  font-family: 'Work Sans', sans-serif;
+}
+
+h5 {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  color: #2a2a72;
+}
+
+p {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  color: #666;
+}
+
+/* Card styling */
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 1rem;
+  padding: 1rem;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.details-wrapper {
+  margin-bottom: 1rem;
+}
+
+h5 {
+  margin-top: 0.5rem;
+  color: #ff5722; /* Match theme color */
+}
+
+p {
+  color: #333333;
+}
+
+/* Button group styling */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Work Sans', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e64a19;
+}
+
+.btn-view {
+  background-color: #ff5722;
+}
+
+.btn-danger {
+  background-color: #f44336;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+.btn-edit {
+  background-color: #ff9800;
+}
+
+.btn-edit:hover {
+  background-color: #fb8c00;
+}
+
+/* Empty container */
+.empty-container {
+  text-align: center;
+  margin: 2rem 0;
+  font-family: 'Work Sans', sans-serif;
+}
