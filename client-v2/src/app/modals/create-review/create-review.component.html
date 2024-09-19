@@ -3,7 +3,7 @@
   nzTitle="Create Project"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
->
+style="background-color: #ff5722;">
   <ng-container *nzModalContent>
     <form [formGroup]="form">
       <div class="form-row">
@@ -21,9 +21,9 @@
         />
       </div>
       <div class="form-row">
-        <label for="password" class="form-label"> Description </label>
+        <label for="description" class="form-label"> Description </label>
         <textarea
-          type="text"
+          id="description"
           class="form-input large"
           [class.input-error]="
             form['controls']['description'].errors &&

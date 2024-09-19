@@ -1,8 +1,37 @@
-.form-input.large {
-  min-height: 300px;
-}
 .form-input,
 .form-textarea,
 .form-select {
   background: transparent;
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  border-radius: 5px; /* Add border radius */
+  font-family: 'Work Sans', sans-serif; /* Set font */
+  color: #333; /* Text color */
+  padding: 10px; /* Add padding for better spacing */
+}
+
+.form-input.large {
+  min-height: 300px;
+}
+
+/* Override styles for the 'Ok' button in the modal */
+.nz-modal-footer .ant-btn-primary {
+  background-color: #ff5722; /* Set background color */
+  border-color: #ff5722; /* Set border color */
+}
+
+.nz-modal-footer .ant-btn-primary:hover {
+  background-color: #e64a19; /* Darker shade on hover */
+  border-color: #e64a19; /* Darker shade on hover */
+}
+
+
+/* Style for input error */
+.input-error {
+  border: 1px solid #ff5722; /* Red border for errors */
+}
+
+/* Form labels */
+.form-label {
+  font-family: 'Work Sans', sans-serif; /* Set font for labels */
+  color: #2a2a72; /* Color for labels */
 }

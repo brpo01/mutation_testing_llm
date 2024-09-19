@@ -2,3 +2,14 @@ span {
   text-align: center;
   margin-inline: auto;
 }
+
+.btn.btn-primary {
+  background-color: #ff5722; /* Set background color */
+  border-color: #ff5722; /* Set border color */
+  color: white; /* Set text color */
+}
+
+.btn.btn-primary:hover {
+  background-color: #e64a19; /* Darker shade on hover */
+  border-color: #e64a19; /* Darker shade on hover */
+}
