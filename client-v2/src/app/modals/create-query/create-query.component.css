@@ -1,11 +1,16 @@
 .form-input.large {
   min-height: 120px;
+  background: transparent; /* Ensure the background is transparent */
+  font-family: 'Work Sans', sans-serif; /* Use Work Sans font */
+  color: #2a2a72; /* Set text color */
 }
 
 .form-input,
 .form-textarea,
 .form-select {
-  background: transparent;
+  background: transparent; /* Keep background transparent */
+  font-family: 'Work Sans', sans-serif; /* Use Work Sans font */
+  color: #2a2a72; /* Set text color */
 }
 
 .input-container {
@@ -19,25 +24,50 @@
 }
 
 .upload-label {
-  background: var(--primary-500);
-  color: white;
+  background: #ff5722; /* Set the background color */
+  color: white; /* Set text color */
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
   text-align: center;
   font-size: 0.875rem;
   line-height: 1.5;
+  font-family: 'Work Sans', sans-serif; /* Use Work Sans font */
 }
 
 .upload-label:hover {
-  background: var(--primary-600);
+  background: #e64a19; /* Darker shade on hover */
 }
 
 .upload-label:active {
-  background: var(--primary-700);
+  background: #c95b2f; /* Darker shade on active */
 }
 
 .upload-label:before {
   content: '📁'; /* File icon */
   margin-right: 0.5rem;
+}
+
+/* Style the "OK" button in the nz-modal */
+.ant-modal-footer .ant-btn-primary {
+  background-color: #ff5722 !important;; /* Set background color */
+  border-color: #ff5722 !important;; /* Set border color */
+  color: white !important;; /* Set text color */
+  font-family: 'Work Sans', sans-serif !important;; /* Change to your desired font */
+}
+
+.ant-modal-footer .ant-btn-primary:hover {
+  background-color: #e64a19 !important; /* Darker shade on hover */
+  border-color: #e64a19 !important;; /* Darker border on hover */
+}
+
+/* If you want to target the modal title and content */
+.nz-modal-title {
+  font-family: 'Work Sans', sans-serif !important;; /* Set the font */
+  color: #2a2a72 !important;; /* Set the color */
+}
+
+.nz-modal-content {
+  font-family: 'Work Sans', sans-serif !important;; /* Set the font */
+  color: #2a2a72 !important;; /* Set the color */
 }
